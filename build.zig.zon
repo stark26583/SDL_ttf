@@ -1,0 +1,28 @@
+.{
+    .name = "SDL_ttf",
+    .version = "2.20.0",
+    .dependencies = .{
+        .harfbuzz = .{
+            .url = "git+https://github.com/allyourcodebase/harfbuzz#d642b5da200481be30a2e3518e7716722079d6a5",
+            .hash = "122070f575e5d253373a1cb40352118f59b5934858a178370add2d3de9ad8819e149",
+        },
+        .freetype = .{
+            .url = "git+https://github.com/allyourcodebase/freetype#d0a748192f26bd20f9f339d0d7156b84e90eb4dc",
+            .hash = "1220fb290c4071d0d889d27762282f473b5f9cb9a7e2b429bcb9acbd9172a6e2a1e4",
+        },
+        .sdl = .{
+            .url = "git+https://github.com/allyourcodebase/SDL#a544388ba6e2c862179045439f466385ba1984a8",
+            .hash = "12208772d3b892948a9af38ef24e26dd4fbc98cb0378fff4afab5fc596a4d4cef350",
+        },
+        .sdl_ttf = .{
+            .url = "git+https://github.com/libsdl-org/SDL_ttf#release-2.22.0",
+            .hash = "1220646027433d9ab9c1703ac73ad656fd6ff9d70a0ba1e30bf7480449da1efaeeef",
+        },
+    },
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "LICENSE.txt",
+        "README.md",
+    },
+}
