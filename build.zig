@@ -21,7 +21,7 @@ pub fn build(b: *std.Build) void {
             .optimize = optimize,
         });
         lib.linkLibrary(harfbuzz_dep.artifact("harfbuzz"));
-        lib.defineCMacro("TTF_USE_HARFBUZZ", null);
+        lib.root_module.addCMacro("TTF_USE_HARFBUZZ", "");
     }
 
     const freetype_dep = b.dependency("freetype", .{
@@ -36,8 +36,7 @@ pub fn build(b: *std.Build) void {
     });
     const sdl_lib = sdl_dep.artifact("SDL2");
     lib.linkLibrary(sdl_lib);
-    if (sdl_lib.installed_headers_include_tree) |tree|
-        lib.addIncludePath(tree.getDirectory().path(b, "SDL2"));
+    lib.addIncludePath(sdl_lib.getEmittedIncludeTree().path(b, "SDL2"));
 
     lib.installHeader(upstream.path("SDL_ttf.h"), "SDL2/SDL_ttf.h");
 

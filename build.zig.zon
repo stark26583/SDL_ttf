@@ -11,8 +11,8 @@
             .hash = "1220fb290c4071d0d889d27762282f473b5f9cb9a7e2b429bcb9acbd9172a6e2a1e4",
         },
         .sdl = .{
-            .url = "git+https://github.com/allyourcodebase/SDL#7827c2ff97632e7238d936a86a43805d898e0a37",
-            .hash = "1220f50dc8031cf65728b856f91b25c051ca28690bdfa590893ab8e644674e004e68",
+            .url = "git+https://github.com/allyourcodebase/SDL#33bb457f47dd9fce5deab651f56c7ea08559430c",
+            .hash = "1220c3a9f874bda11563c0f1e7fa5bfab0f7378af40310dcd49426e7d1afe9483fb6",
         },
         .sdl_ttf = .{
             .url = "git+https://github.com/libsdl-org/SDL_ttf#release-2.24.0",
