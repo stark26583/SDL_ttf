@@ -3,16 +3,21 @@ const std = @import("std");
 pub fn build(b: *std.Build) void {
     const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
-    const harfbuzz_enabled = b.option(bool, "enable-harfbuzz", "Use HarfBuzz to improve text shaping") orelse false;
+    const harfbuzz_enabled = b.option(bool, "enable-harfbuzz", "Use HarfBuzz to improve text shaping") orelse true;
 
     const upstream = b.dependency("sdl_ttf", .{});
 
     const lib = b.addStaticLibrary(.{
-        .name = "SDL2_ttf",
+        .name = "SDL3_ttf",
         .target = target,
         .optimize = optimize,
     });
-    lib.addCSourceFile(.{ .file = upstream.path("SDL_ttf.c") });
+    lib.addIncludePath(upstream.path("include"));
+    lib.addIncludePath(upstream.path("src"));
+    lib.addCSourceFiles(.{
+        .root = upstream.path("src"),
+        .files = srcs,
+    });
     lib.linkLibC();
 
     if (harfbuzz_enabled) {
@@ -21,7 +26,7 @@ pub fn build(b: *std.Build) void {
             .optimize = optimize,
         });
         lib.linkLibrary(harfbuzz_dep.artifact("harfbuzz"));
-        lib.root_module.addCMacro("TTF_USE_HARFBUZZ", "");
+        lib.root_module.addCMacro("TTF_USE_HARFBUZZ", "1");
     }
 
     const freetype_dep = b.dependency("freetype", .{
@@ -34,11 +39,19 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
-    const sdl_lib = sdl_dep.artifact("SDL2");
+    const sdl_lib = sdl_dep.artifact("SDL3");
     lib.linkLibrary(sdl_lib);
-    lib.addIncludePath(sdl_lib.getEmittedIncludeTree().path(b, "SDL2"));
 
-    lib.installHeader(upstream.path("SDL_ttf.h"), "SDL2/SDL_ttf.h");
+    lib.installHeadersDirectory(upstream.path("include"), "", .{});
 
     b.installArtifact(lib);
 }
+
+const srcs: []const []const u8 = &.{
+    "SDL_gpu_textengine.c",
+    "SDL_hashtable.c",
+    "SDL_hashtable_ttf.c",
+    "SDL_renderer_textengine.c",
+    "SDL_surface_textengine.c",
+    "SDL_ttf.c",
+};

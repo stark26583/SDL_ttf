@@ -1,6 +1,6 @@
 .{
     .name = "SDL_ttf",
-    .version = "2.24.0",
+    .version = "3.1.0",
     .dependencies = .{
         .harfbuzz = .{
             .url = "git+https://github.com/allyourcodebase/harfbuzz#d642b5da200481be30a2e3518e7716722079d6a5",
@@ -11,12 +11,12 @@
             .hash = "1220fb290c4071d0d889d27762282f473b5f9cb9a7e2b429bcb9acbd9172a6e2a1e4",
         },
         .sdl = .{
-            .url = "git+https://github.com/allyourcodebase/SDL#8e09c7011b0596c3dc406c41990a3b1b21046858",
-            .hash = "12201710e99842ac1e44d077ad82fd0c642cdae153c3b5796054aa1351c5faca2843",
+            .url = "git+https://github.com/castholm/SDL#v0.1.4+SDL-3.2.2",
+            .hash = "122096d834053ebbc8a8ba37dd9ac4e8f35790b7aa6e98a72807cf428c3de255dd82",
         },
         .sdl_ttf = .{
-            .url = "git+https://github.com/libsdl-org/SDL_ttf#release-2.24.0",
-            .hash = "1220cdf95cd4f290d47006c04c55c9fabbe73a44a00113438f225b940a2a2af2c685",
+            .url = "git+https://github.com/libsdl-org/SDL_ttf#preview-3.1.0",
+            .hash = "1220ef4b78a98860fe83aa4e744348fc9c066dd7e0c07f100a502cecd6e59898fae3",
         },
     },
     .paths = .{
