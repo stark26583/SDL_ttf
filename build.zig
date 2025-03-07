@@ -5,12 +5,17 @@ pub fn build(b: *std.Build) void {
     const optimize = b.standardOptimizeOption(.{});
     const harfbuzz_enabled = b.option(bool, "enable-harfbuzz", "Use HarfBuzz to improve text shaping") orelse true;
 
-    const upstream = b.dependency("sdl_ttf", .{});
+    const upstream = b.dependency("SDL_ttf", .{});
 
-    const lib = b.addStaticLibrary(.{
+    const lib = b.addLibrary(.{
         .name = "SDL3_ttf",
-        .target = target,
-        .optimize = optimize,
+        .version = .{ .major = 3, .minor = 2, .patch = 0 },
+        .linkage = .static,
+        .root_module = b.createModule(.{
+            .target = target,
+            .optimize = optimize,
+            .link_libc = true,
+        }),
     });
     lib.addIncludePath(upstream.path("include"));
     lib.addIncludePath(upstream.path("src"));
@@ -18,7 +23,6 @@ pub fn build(b: *std.Build) void {
         .root = upstream.path("src"),
         .files = srcs,
     });
-    lib.linkLibC();
 
     if (harfbuzz_enabled) {
         const harfbuzz_dep = b.dependency("harfbuzz", .{
@@ -35,12 +39,11 @@ pub fn build(b: *std.Build) void {
     });
     lib.linkLibrary(freetype_dep.artifact("freetype"));
 
-    const sdl_dep = b.dependency("sdl", .{
+    const sdl = b.dependency("SDL", .{
         .target = target,
         .optimize = optimize,
-    });
-    const sdl_lib = sdl_dep.artifact("SDL3");
-    lib.linkLibrary(sdl_lib);
+    }).artifact("SDL3");
+    lib.linkLibrary(sdl);
 
     lib.installHeadersDirectory(upstream.path("include"), "", .{});
 
