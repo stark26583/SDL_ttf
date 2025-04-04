@@ -9,7 +9,7 @@ pub fn build(b: *std.Build) void {
 
     const lib = b.addLibrary(.{
         .name = "SDL3_ttf",
-        .version = .{ .major = 3, .minor = 2, .patch = 0 },
+        .version = .{ .major = 3, .minor = 2, .patch = 2 },
         .linkage = .static,
         .root_module = b.createModule(.{
             .target = target,
