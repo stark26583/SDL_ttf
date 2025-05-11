@@ -7,10 +7,16 @@ pub fn build(b: *std.Build) void {
 
     const upstream = b.dependency("SDL_ttf", .{});
 
+    const preferred_linkage = b.option(
+        std.builtin.LinkMode,
+        "preferred_linkage",
+        "Prefer building statically or dynamically linked libraries (default: static)",
+    ) orelse .static;
+
     const lib = b.addLibrary(.{
         .name = "SDL3_ttf",
         .version = .{ .major = 3, .minor = 2, .patch = 2 },
-        .linkage = .static,
+        .linkage = preferred_linkage,
         .root_module = b.createModule(.{
             .target = target,
             .optimize = optimize,
@@ -42,6 +48,7 @@ pub fn build(b: *std.Build) void {
     const sdl = b.dependency("SDL", .{
         .target = target,
         .optimize = optimize,
+        .preferred_linkage = preferred_linkage,
     }).artifact("SDL3");
     lib.linkLibrary(sdl);
 
