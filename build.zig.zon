@@ -1,7 +1,7 @@
 .{
     .name = .sdl_ttf,
     .version = "3.2.0",
-    .fingerprint = 0xa98f7681c4b9d53c,
+    .fingerprint = 0xa05f652fdab65b46,
     .minimum_zig_version = "0.14.0",
     .dependencies = .{
         .harfbuzz = .{
