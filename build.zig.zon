@@ -1,5 +1,5 @@
 .{
-    .name = .SDL_ttf,
+    .name = .sdl_ttf,
     .version = "3.2.0",
     .fingerprint = 0xa98f7681c4b9d53c,
     .minimum_zig_version = "0.14.0",
@@ -11,10 +11,6 @@
         .freetype = .{
             .url = "git+https://github.com/allyourcodebase/freetype#d0a748192f26bd20f9f339d0d7156b84e90eb4dc",
             .hash = "freetype-2.13.2-AAAAAByJAAD7KQxAcdDYidJ3YigvRztfnLmn4rQpvLms",
-        },
-        .SDL = .{
-            .url = "git+https://github.com/castholm/SDL/#v0.2.2+3.2.12",
-            .hash = "sdl-0.2.2+3.2.12-7uIn9EpsfgG_BF1uqSfix5rkc6EsZCZY35sQxAjVVO7a",
         },
         .SDL_ttf = .{
             .url = "git+https://github.com/libsdl-org/SDL_ttf#release-3.2.2",

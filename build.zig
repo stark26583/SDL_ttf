@@ -7,25 +7,13 @@ pub fn build(b: *std.Build) void {
 
     const upstream = b.dependency("SDL_ttf", .{});
 
-    const preferred_linkage = b.option(
-        std.builtin.LinkMode,
-        "preferred_linkage",
-        "Prefer building statically or dynamically linked libraries (default: static)",
-    ) orelse .static;
-
-    const lib = b.addLibrary(.{
-        .name = "SDL3_ttf",
-        .version = .{ .major = 3, .minor = 2, .patch = 2 },
-        .linkage = preferred_linkage,
-        .root_module = b.createModule(.{
-            .target = target,
-            .optimize = optimize,
-            .link_libc = true,
-        }),
+    const sdl_ttf_module = b.addModule("sdl_ttf", .{
+        .target = target,
+        .optimize = optimize,
     });
-    lib.addIncludePath(upstream.path("include"));
-    lib.addIncludePath(upstream.path("src"));
-    lib.addCSourceFiles(.{
+    sdl_ttf_module.addIncludePath(upstream.path("include"));
+    sdl_ttf_module.addIncludePath(upstream.path("src"));
+    sdl_ttf_module.addCSourceFiles(.{
         .root = upstream.path("src"),
         .files = srcs,
     });
@@ -35,26 +23,15 @@ pub fn build(b: *std.Build) void {
             .target = target,
             .optimize = optimize,
         });
-        lib.linkLibrary(harfbuzz_dep.artifact("harfbuzz"));
-        lib.root_module.addCMacro("TTF_USE_HARFBUZZ", "1");
+        sdl_ttf_module.linkLibrary(harfbuzz_dep.artifact("harfbuzz"));
+        sdl_ttf_module.addCMacro("TTF_USE_HARFBUZZ", "1");
     }
 
     const freetype_dep = b.dependency("freetype", .{
         .target = target,
         .optimize = optimize,
     });
-    lib.linkLibrary(freetype_dep.artifact("freetype"));
-
-    const sdl = b.dependency("SDL", .{
-        .target = target,
-        .optimize = optimize,
-        .preferred_linkage = preferred_linkage,
-    }).artifact("SDL3");
-    lib.linkLibrary(sdl);
-
-    lib.installHeadersDirectory(upstream.path("include"), "", .{});
-
-    b.installArtifact(lib);
+    sdl_ttf_module.linkLibrary(freetype_dep.artifact("freetype"));
 }
 
 const srcs: []const []const u8 = &.{
